@@ -39,6 +39,7 @@
 #include <arpa/inet.h>
 #include <signal.h>
 #include <pthread.h>
+#include <limits.h>
 
 #include "ll.h"
 #include "history.h"
