@@ -17,7 +17,6 @@ mplayerd: mplayerd.o ${MPLAYERD_OBJS} user_message_mplayerd
 
 clean:
 	rm -f ${MPLAYERC_OBJS} ${MPLAYERD_OBJS} ${BINARY} mplayerc mplayerd.o mplayerc.o test.o
-	>valgrind.log
 
 install: all install_complete_message
 	mkdir -p /usr/local/bin/ /usr/local/man/man1/ 
