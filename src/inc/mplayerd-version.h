@@ -1,1 +1,1 @@
-#define MPLAYERD_VERSION "current"
+#define MPLAYERD_VERSION "1.0.0"
