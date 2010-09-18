@@ -19,7 +19,7 @@ clean:
 	rm -f ${MPLAYERC_OBJS} ${MPLAYERD_OBJS} ${BINARY} mplayerc mplayerd.o mplayerc.o test.o
 
 install: all install_complete_message
-	mkdir -p ${PREFIX}/man/man1/ 
+	mkdir -p ${PREFIX}/man/man1/  ${PREFIX}/bin/
 	install -m 0555 ${BINARY} ${PREFIX}/bin/
 	install -m 0555 ../mplayerd.1 ${PREFIX}/man/man1/mplayerd.1
 
