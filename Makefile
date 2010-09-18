@@ -5,6 +5,8 @@ SUBDIRS=src
 $(SUBDIRS):
 	$(MAKE) -C $@
 
-clean:
-	$(MAKE) -C src clean
 
+SRC_TARGETS=clean install
+
+$(SRC_TARGETS):
+	$(MAKE) -C src $@

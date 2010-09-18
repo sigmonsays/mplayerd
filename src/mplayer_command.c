@@ -117,7 +117,7 @@ void mplayer_message_thread() {
 				}
 			}
 
-			timeout.tv_sec = 0;
+			timeout.tv_sec = 1;
 			timeout.tv_usec = 500;
 			select(0, NULL, NULL, NULL, &timeout);
 
