@@ -19,9 +19,9 @@ clean:
 	rm -f ${MPLAYERC_OBJS} ${MPLAYERD_OBJS} ${BINARY} mplayerc mplayerd.o mplayerc.o test.o
 
 install: all install_complete_message
-	mkdir -p /usr/local/bin/ /usr/local/man/man1/ 
-	install -m 0555 ${BINARY} /usr/local/bin/
-	install -m 0555 ../mplayerd.1 /usr/local/man/man1/mplayerd.1
+	mkdir -p ${PREFIX}/man/man1/ 
+	install -m 0555 ${BINARY} ${PREFIX}/bin/
+	install -m 0555 ../mplayerd.1 ${PREFIX}/man/man1/mplayerd.1
 
 build: clean all
 
@@ -41,4 +41,4 @@ uninstall:
 	rm -f /usr/local/bin/mplayerd
 
 install_config:
-	install -m 0555 ../mplayerd.conf /etc/mplayerd.conf
+	install -m 0555 ../mplayerd.conf ${PREFIX}/etc/mplayerd.conf
