@@ -447,9 +447,9 @@ int mp_process_command(int idx, char *cmdline) {
 
 	clients[idx].instance = inst;
 
-	pthread_mutex_lock(&instances_mutex);
+	// pthread_mutex_lock(&instances_mutex);
 	mp_inst = get_instance(inst);
-	pthread_mutex_unlock(&instances_mutex);
+	// pthread_mutex_unlock(&instances_mutex);
 
 	if (!mp_inst) {
 		if (client_sendf(idx, "invalid instance %d\r\n", inst) == -1) goto out;
@@ -478,21 +478,21 @@ int mp_process_command(int idx, char *cmdline) {
 		if (client_sendf(idx, "instance: %d\r\n", inst) == -1) goto out;
 #endif /* INSTANCE_SUPPORT */
 
-		pthread_mutex_lock(lock);
+		// pthread_mutex_lock(lock);
 
 		if (mpx->filename[0] == '\0') {
 			if (client_send(idx, "file: none\r\n") == -1) {
-				pthread_mutex_unlock(lock);
+				// pthread_mutex_unlock(lock);
 				goto out;
 			}
 		} else {
 			if (client_sendf(idx, "file: %s\r\n", mpx->filename) == -1) {
-				pthread_mutex_unlock(lock);
+				// pthread_mutex_unlock(lock);
 				goto out;
 			}
 		}
 		if (client_sendf(idx, "status: %s\r\n", mplayer_status_str(mpx)) == -1) {
-			pthread_mutex_unlock(lock);
+			// pthread_mutex_unlock(lock);
 			goto out;
 		}
 
@@ -503,12 +503,12 @@ int mp_process_command(int idx, char *cmdline) {
 				"frame: %d\r\n",
 				mpx->video_sec, mpx->audio_sec, mpx->length, mpx->current_frame) == -1) {
 
-				pthread_mutex_unlock(lock);
+				// pthread_mutex_unlock(lock);
 				goto out;
 			}
 
 		}
-		pthread_mutex_unlock(lock);
+		// pthread_mutex_unlock(lock);
 
 	} else if (cmd == CMD_QUIT) {
 		goto out;
@@ -614,7 +614,7 @@ int mp_process_command(int idx, char *cmdline) {
 		if (num_args > 1 + arg_offset) {
 			pthread_mutex_lock(lock);
 			r = mplayer_volume(mpx, strtol(cmd_args[1 + arg_offset], NULL, 0));
-			pthread_mutex_unlock(lock);
+			// pthread_mutex_unlock(lock);
 
 			if (r == -1) {
 				if (client_send(idx, "0 volume error\r\n") == -1) goto out;
@@ -628,9 +628,9 @@ int mp_process_command(int idx, char *cmdline) {
 	} else if (cmd == CMD_LITERAL) {
 
 		if (num_args > 1 + arg_offset) {
-			pthread_mutex_lock(lock);
+			// pthread_mutex_lock(lock);
 			r = mplayer_command(mp_inst->mpx, cmd_args[1 + arg_offset]);
-			pthread_mutex_unlock(lock);
+			// pthread_mutex_unlock(lock);
 
 			if (r == -1) {
 				if (client_send(idx, "0 mplayer_command error\r\n") == -1) goto out;
@@ -647,9 +647,9 @@ int mp_process_command(int idx, char *cmdline) {
 	} else if (cmd == CMD_SEEK_PERCENT) {
 		if (num_args > 1 + arg_offset) {
 
-			pthread_mutex_lock(lock);
+			// pthread_mutex_lock(lock);
 			r = mplayer_seek_percent(mpx, cmd_args[1 + arg_offset]);
-			pthread_mutex_unlock(lock);
+			// pthread_mutex_unlock(lock);
 
 			if (r == -1) {
 				if (client_send(idx, "0 No file loaded\r\n") == -1) goto out;
@@ -663,9 +663,9 @@ int mp_process_command(int idx, char *cmdline) {
 	} else if (cmd == CMD_SEEK_ABSOLUTE) {
 		if (num_args > 1 + arg_offset) {
 
-			pthread_mutex_lock(lock);
+			// pthread_mutex_lock(lock);
 			r = mplayer_seek_absolute(mpx, cmd_args[1 + arg_offset]);
-			pthread_mutex_unlock(lock);
+			// pthread_mutex_unlock(lock);
 
 			if (r == -1) {
 				if (client_send(idx, "0 No file loaded\r\n") == -1) goto out;
@@ -678,9 +678,9 @@ int mp_process_command(int idx, char *cmdline) {
 
 	} else if (cmd == CMD_SEEK_RELATIVE) {
 		if (num_args > 1 + arg_offset) {
-			pthread_mutex_lock(lock);
+			// pthread_mutex_lock(lock);
 			r = mplayer_seek_relative(mpx, cmd_args[1 + arg_offset]);
-			pthread_mutex_unlock(lock);
+			// pthread_mutex_unlock(lock);
 
 			if (r == -1) {
 				if (client_send(idx, "0 No file loaded\r\n") == -1) goto out;
@@ -693,9 +693,9 @@ int mp_process_command(int idx, char *cmdline) {
 
 	} else if (cmd == CMD_OSD) {
 		if (num_args > 1 + arg_offset) {
-			pthread_mutex_lock(lock);
+			// pthread_mutex_lock(lock);
 			r = mplayer_osd(mpx, strtol(cmd_args[1 + arg_offset], NULL, 0));
-			pthread_mutex_unlock(lock);
+			// pthread_mutex_unlock(lock);
 
 			if (r == -1) {
 				if (client_send(idx, "0 failed to set osd level\r\n") == -1) goto out;
@@ -708,9 +708,9 @@ int mp_process_command(int idx, char *cmdline) {
 
 	} else if (cmd == CMD_FULLSCREEN) {
 
-		pthread_mutex_lock(lock);
+		// pthread_mutex_lock(lock);
 		r = mplayer_fullscreen(mpx);
-		pthread_mutex_unlock(lock);
+		// pthread_mutex_unlock(lock);
 
 		if (r == -1) {
 			if (client_send(idx, "0 No file loaded\r\n") == -1) goto out;
@@ -720,38 +720,38 @@ int mp_process_command(int idx, char *cmdline) {
 			
 	} else if (cmd == CMD_PAUSE) {
 
-		pthread_mutex_lock(lock);
+		// pthread_mutex_lock(lock);
 		r = mplayer_pause(mpx);
-		pthread_mutex_unlock(lock);
+		// pthread_mutex_unlock(lock);
 
 		if (r == -1) {
 			if (client_send(idx, "0 pause failed\r\n") == -1) goto out;
 		} else {
 
-			pthread_mutex_lock(lock);
+			// pthread_mutex_lock(lock);
 			if (mpx->status == MP_PLAYING) {
 
 				if (client_send(idx, "1 Playing\r\n") == -1) {
-					pthread_mutex_unlock(lock);
+					// pthread_mutex_unlock(lock);
 					goto out;
 				}
 
 			} else if (mpx->status == MP_PAUSED) {
 				if (client_send(idx, "1 Paused\r\n") == -1) {
-					pthread_mutex_unlock(lock);
+					// pthread_mutex_unlock(lock);
 					goto out;
 				}
 
 			} else {
 				DBG("ERROR: Bad state in pause command (%d)\n", mpx->status);
 			}
-			pthread_mutex_unlock(lock);
+			// pthread_mutex_unlock(lock);
 		}
 
 	} else if (cmd == CMD_STOP) {
-		pthread_mutex_lock(lock);
+		// pthread_mutex_lock(lock);
 		r = mplayer_quit(mpx);
-		pthread_mutex_unlock(lock);
+		// pthread_mutex_unlock(lock);
 
 		if (r == -1) {
 			if (client_send(idx, "0 No file loaded\r\n") == -1) goto out;
@@ -790,9 +790,9 @@ int mp_process_command(int idx, char *cmdline) {
 			/* now that we got a file/url to load .. lets do it! */
 			if (r) {
 
-				pthread_mutex_lock(lock);
+				// pthread_mutex_lock(lock);
 				r = mplayer_load(mpx, new_path, inst);
-				pthread_mutex_unlock(lock);
+				// pthread_mutex_unlock(lock);
 
 				if (r == -1) {
 					if (client_send(idx, "0 load error\r\n") == -1) goto out;
@@ -916,9 +916,9 @@ int mp_process_command(int idx, char *cmdline) {
 
 
 	} else if (cmd == CMD_MUTE) {
-		pthread_mutex_lock(lock);
+		// pthread_mutex_lock(lock);
 		r = mplayer_mute(mpx);
-		pthread_mutex_unlock(lock);
+		// pthread_mutex_unlock(lock);
 
 		if (r == -1) {
 			if (client_send(idx, "0 mute failed\r\n") == -1) goto out;
@@ -964,9 +964,9 @@ int mp_process_command(int idx, char *cmdline) {
 				sprintf(new_path, "%s/%s/%s", config->root, clients[idx].cwd, p);
 				xfree(p);
 
-				pthread_mutex_lock(lock);
+				// pthread_mutex_lock(lock);
 				r = mplayer_load(mpx, new_path, inst);
-				pthread_mutex_unlock(lock);
+				// pthread_mutex_unlock(lock);
 
 				if (r == -1) {
 					if (client_send(idx, "0 load error\r\n") == -1) goto out;
@@ -986,9 +986,9 @@ int mp_process_command(int idx, char *cmdline) {
 
 	} else if (cmd == CMD_RESET) {
 
-		pthread_mutex_lock(lock);
+		// pthread_mutex_lock(lock);
 		mplayer_unload(mpx);
-		pthread_mutex_unlock(lock);
+		// pthread_mutex_unlock(lock);
 
 
 #ifdef INSTANCE_SUPPORT
@@ -996,10 +996,10 @@ int mp_process_command(int idx, char *cmdline) {
 
 		i = 1;
 
-		pthread_mutex_lock(&instances_mutex);
+		// pthread_mutex_lock(&instances_mutex);
 
 		if (client_sendf(idx, "%d/%d instances\r\n", instance_count, config->max_instances) == -1) {
-			pthread_mutex_unlock(&instances_mutex);
+			// pthread_mutex_unlock(&instances_mutex);
 			goto out;
 		}
 
@@ -1011,22 +1011,22 @@ int mp_process_command(int idx, char *cmdline) {
 
 			tmp_inst = (struct mp_instance_t *) mp_instances->list->data;
 
-			pthread_mutex_lock(&tmp_inst->lock);
+			// pthread_mutex_lock(&tmp_inst->lock);
 
 			if (client_sendf(idx, "%d %s %s\r\n",
 				tmp_inst->id,
 				mplayer_status_str(tmp_inst->mpx),
 				((tmp_inst->mpx->filename[0] == 0) ? "none" : tmp_inst->mpx->filename)) == -1) {
 
-				pthread_mutex_unlock(&tmp_inst->lock);
-				pthread_mutex_unlock(&instances_mutex);
+				// pthread_mutex_unlock(&tmp_inst->lock);
+				// pthread_mutex_unlock(&instances_mutex);
 				goto out;
 			}
 
-			pthread_mutex_unlock(&tmp_inst->lock);
+			// pthread_mutex_unlock(&tmp_inst->lock);
 
 		}
-		pthread_mutex_unlock(&instances_mutex);
+		// pthread_mutex_unlock(&instances_mutex);
 
 	} else if (cmd == CMD_NEW_INSTANCE) {
 
@@ -1051,26 +1051,26 @@ int mp_process_command(int idx, char *cmdline) {
 			if (client_send(idx, "0 can't delete first instance\r\n") == -1) goto out;
 		} else {
 
-			pthread_mutex_lock(&instances_mutex);
+			// pthread_mutex_lock(&instances_mutex);
 			tmp_inst = get_instance(inst);
 
 			if (tmp_inst) {
 
 				if (free_instance(inst) == 0) {
 					if (client_sendf(idx, "1 deleted instance %d\r\n", inst) == -1) {
-						pthread_mutex_unlock(&instances_mutex);
+						// pthread_mutex_unlock(&instances_mutex);
 						goto out;
 					}
 				} else {
 					if (client_sendf(idx, "0 error deleting instance %d\r\n", inst) == -1) {
-						pthread_mutex_unlock(&instances_mutex);
+						// pthread_mutex_unlock(&instances_mutex);
 						goto out;
 					}
 				}
-				pthread_mutex_unlock(&instances_mutex);
+				// pthread_mutex_unlock(&instances_mutex);
 
 			} else {
-				pthread_mutex_unlock(&instances_mutex);
+				// pthread_mutex_unlock(&instances_mutex);
 				if (client_sendf(idx, "0 invalid instance %d\r\n", inst) == -1) {
 					goto out;
 				}
@@ -1083,7 +1083,7 @@ int mp_process_command(int idx, char *cmdline) {
 
 	} else if (cmd == CMD_ARGUMENTS) {
 
-		pthread_mutex_lock(&instances_mutex);
+		// pthread_mutex_lock(&instances_mutex);
 	
 		tmp_inst = get_instance(inst);
 
@@ -1094,22 +1094,22 @@ int mp_process_command(int idx, char *cmdline) {
 				tmp_inst->args = xstrdup(cmd_args[1 + arg_offset]);
 
 				if (client_sendf(idx, "1 instance %d arguments set.\r\n", inst) == -1) {
-					pthread_mutex_unlock(&instances_mutex);
+					// pthread_mutex_unlock(&instances_mutex);
 					goto out;
 				}
 
-				pthread_mutex_unlock(&instances_mutex);
+				// pthread_mutex_unlock(&instances_mutex);
 			} else {
 				/* just print arguments */
 				if (client_sendf(idx, "1 instance %d arguments \"%s\"\r\n", inst, (tmp_inst->args) ? tmp_inst->args : config->mplayer_flags) == -1) {
-					pthread_mutex_unlock(&instances_mutex);
+					// pthread_mutex_unlock(&instances_mutex);
 					goto out;
 				}
-				pthread_mutex_unlock(&instances_mutex);
+				// pthread_mutex_unlock(&instances_mutex);
 			}
 
 		} else {
-			pthread_mutex_unlock(&instances_mutex);
+			// pthread_mutex_unlock(&instances_mutex);
 			if (client_sendf(idx, "0 invalid instance %d\r\n", inst) == -1) {
 				goto out;
 			}
@@ -1120,9 +1120,9 @@ int mp_process_command(int idx, char *cmdline) {
 
 				sprintf(tmp, "dvd://%ld", strtol(cmd_args[1], NULL, 0) );
 
-				pthread_mutex_lock(lock);
+				// pthread_mutex_lock(lock);
 				r = mplayer_load(mpx, tmp, inst);
-				pthread_mutex_unlock(lock);
+				// pthread_mutex_unlock(lock);
 
 				if (r == -1) {
 					if (client_send(idx, "0 load error\r\n") == -1) goto out;
@@ -1136,9 +1136,9 @@ int mp_process_command(int idx, char *cmdline) {
 
 
 	} else if (cmd == CMD_LENGTH) {
-			pthread_mutex_lock(lock);
+			// pthread_mutex_lock(lock);
 			r = mplayer_command(mpx, "get_time_length");
-			pthread_mutex_unlock(lock);
+			// pthread_mutex_unlock(lock);
 
 			if (r == -1) {
 				if (client_send(idx, "0 get_time_length failed\r\n") == -1) goto out;
