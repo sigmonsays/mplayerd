@@ -1,0 +1,19 @@
+BUGS
+----
+
+This is beta software!
+This is still considered a beta/testing stages
+
+Please report bugs to mplayerd-bugs@signuts.net
+
+When reporting a bug please include the version of mplayer and mplayerd.
+Elaborate as much as possible, as if you were explaining the problem
+to a two year old =)
+
+
+KNOWN BUGS
+----------
+- using -loop 0 is a bad idea, if something goes wrong it's very difficult for mplayerd to recover
+  and maintain the proper state
+- sending 'pause' command many times is rapid succession will crash mplayerd
+

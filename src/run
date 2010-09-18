@@ -1,0 +1,5 @@
+#!/bin/bash
+
+killall -KILL mplayer mplayerd
+make mplayerd && \
+./mplayerd -fg -d -d -d -l log $@ 

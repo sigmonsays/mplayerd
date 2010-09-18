@@ -1,0 +1,4 @@
+#!/bin/bash
+make build
+valgrind -v --show-reachable=yes --leak-check=yes --logfile-fd=420 ./mplayerd -fg \
+420>valgrind.log

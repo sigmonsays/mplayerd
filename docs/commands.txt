@@ -1,0 +1,146 @@
+mplayerd 0.1.16 
+daemon to control mplayer via TCP/IP
+
+-h --help             Print this help message
+-fg --foreground      Don't fork
+-p --port port        Specify port, default 7400
+-l --logfile file     Log to file default off
+-v --version          display version
+-d --debug            debug, can specify multiple times
+-c --config           specify config file
+
+
+mplayerd commands
+-----------------
+Syntax: cd $directory
+Description: change directory
+Change to directory $directory
+
+Syntax: pwd
+Description: print working directory
+Print current working directory
+
+Syntax: ls [ $directory ]
+Description: list files
+list files in current directory or $directory
+
+Syntax: version
+Description: display version
+displays the version of mplayerd
+
+Syntax: status [ $instance ]
+Description: display status
+display current status of movie/mplayerd
+
+Syntax: quit
+Description: close session
+close your session
+
+Syntax: shutdown $string
+Description: shutdown mplayerd
+shut down mplayerd, $string must be 'now'
+
+Syntax: help $string
+Description: display help
+type help $string for more information on command $string
+
+Syntax: load [ $instance ] $file
+Description: load a file
+load $file into mplayer, use quotes for file names with spaces
+
+Syntax: pause [ $instance ]
+Description: pause/unpause
+	pause/unpause playback -- alias to play
+
+Syntax: fullscreen [ $instance ]
+Description: toggle fullscreen
+toggle fullscreen for media playback
+
+Syntax: stop [ $instance ]
+Description: stop (close) movie
+stop and close the playing movie
+
+Syntax: osd [ $instance ] $integer
+Description: on screen display level
+change the OSD (On Screen Display) level $integer
+0 - no OSD
+1 - seek bar
+2 - seek bar + seconds
+3 - seek bar + seconds + time remaining
+
+Syntax: seek_percent $instance $integer
+Description: seek by percent
+seek to percent $integer of the movie
+not all media will support seeking
+
+Syntax: seek_absolute $instance $integer
+Description: seek by seconds
+seek to an absolute position $integer in seconds
+not all media will support seeking
+
+Syntax: seek_relative $instance $integer
+Description: seek relatively by seconds
+seek from current position by $integer seconds
+not all media will support seeking
+
+Syntax: literal [ $instance ] $string
+Description: send mplayer a command
+send mplayer a command directly
+enclose entire command $string in double quotes
+see man mplayer(1) for more information about SLAVE MODE PROTOCOL
+
+Syntax: volume $instance $integer
+Description: adjust the volume down/up
+adjust the volume down/up
+$integer is 0 for down and 1 for up
+
+Syntax: mute [ $instance ]
+Description: mute volume
+mute the volume
+
+Syntax: kill $integer
+Description: kill session
+kill user session $integer
+
+Syntax: history
+Description: display command history
+display previous command history
+
+Syntax: reset [ $instance ]
+Description: reset mplayerd
+reset mplayer if something should go wrong
+
+Syntax: qload [ $instance ] $integer
+Description: quick load
+load file $integer from current directory
+
+Syntax: clear
+Description: clear terminal
+clear the terminal screen
+
+Syntax: instances
+Description: display instances
+displays a list of available instances
+
+Syntax: new
+Description: create new instance
+create a new instance, prints the new instance id
+
+Syntax: delete $instance
+Description: delete instance
+deletes specified instance
+
+Syntax: who
+Description: display who's online
+display who is currently connected to mplayerd
+displays ID, IP and CWD
+
+Syntax: arguments [ $instance ] $string
+Description: change arguments for mplayer
+change/show arguments for instance, enclose arguments in double quotes
+
+
+Syntax: dvd $integer
+Description: load title from dvd
+Load title $integer from dvd
+

@@ -1,0 +1,379 @@
+.TH "mplayerd" "1" "0.0.9" "Sig Lange" ""
+.SH "NAME"
+.LP 
+mplayerd \- command driven daemon to control mplayer via tcp/ip.
+.SH "SYNTAX"
+.LP 
+mplayerd [\fIoptions\fP]
+.br 
+.SH "DESCRIPTION"
+.LP 
+mplayerd is a threaded daemon designed to control mplayer. It features a tab completion CLI, built in command help, unique command name recognition, logging, command history, multiple instance support, and more.
+.SH "OPTIONS"
+.LP 
+.TP 
+\-h \-\-help
+Print this help message
+
+.TP 
+\-fg \-\-foreground
+Don't fork
+
+.TP 
+\-p \-\-port port
+Specify port, default 7400
+
+.TP 
+\-l \-\-logfile file
+Log to file, default off
+
+.TP 
+\-v \-\-version
+display version and exit
+
+.TP 
+\-d \-\-debug
+debug, can specify multiple times
+
+.TP 
+\-c \-\-config
+specify config file
+.SH "FILES"
+.LP 
+\fImplayerd.conf\fP 
+
+Two configuration sections [mplayer] and [daemon] apply to mplayer and the daemon itself, respectively.
+.P
+mplayerd configuration file directives:
+.P
+\fB[mplayer] section\fR
+.br
+.TP
+path = mplayer
+The path to mplayer, this needs to be the absolute path if mplayer is not in your $PATH.
+Default: 'mplayer'
+
+.TP
+vo = driver
+Set the video output device to driver. To get a list of valid video output devices on your setup run 'mplayer \-vo help' Most command are xv, sdl, and x11.
+Default: 'x11'
+
+.TP
+max_instances = X
+maximum number of instances that mplayerd can create.
+Default: 4
+.br
+.br
+.P
+\fB[daemon] section\fR
+.TP
+port = 7400
+Port to listen and accept connections.
+Default: 7400
+
+.TP
+allow = A.B.C.D A.B.C.D
+Specifies who is able to connect to the daemon. Only specified octets are evaluated against the connecting IP.
+So, specifying 123. would allow 123.0.0.0/8 to connect. Seperate multiple IP addresses with a space.
+Default: ''
+
+.TP
+root = /
+Locks a client into a particular directory, they are unable to navigate outside of this directory.
+Default: '/'
+
+.TP
+default_home = /
+Starting path when a client initially connects. The path specified here is relative to root.
+Default: '/'
+
+.SH "EXAMPLE CONFIGURATION"
+.LP
+# sample configuration file for mplayerd
+.br
+# suppose you wanted to use xv as your video out device and allow only 2 instances of mplayer to be created, the configuration
+.br
+# could be something like the following:
+
+.P
+[mplayer]
+.br
+#default 'mplayer'
+.br
+path = mplayer
+.br
+.br
+vo = xv
+.br
+flags =
+.br
+#default 4
+.br
+max_instances = 2
+.P
+[daemon]
+.br
+#default 7400
+.br
+port = 7400
+.br
+allow = 127.0.0.1
+.br
+.br
+#default /
+.br
+root = /
+.br
+.br
+# relative to root
+.br
+default_home = /
+.br
+
+
+.SH "MPLAYERD COMMANDS"
+.LP 
+
+.P
+\fBSyntax:\fR cd $directory
+.br
+\fBDescription:\fR change directory
+.br
+Change to directory $directory
+
+.P
+\fBSyntax:\fR pwd
+.br
+\fBDescription:\fR print working directory
+.br
+Print current working directory
+
+.P
+\fBSyntax:\fR ls [ $directory ]
+.br
+\fBDescription:\fR list files
+.br
+list files in current directory or $directory
+
+.P
+\fBSyntax:\fR version
+.br
+\fBDescription:\fR display version
+.br
+displays the version of mplayerd
+
+.P
+\fBSyntax:\fR status [ $instance ]
+.br
+\fBDescription:\fR display status
+.br
+display current status of movie/mplayerd
+
+.P
+\fBSyntax:\fR quit
+.br
+\fBDescription:\fR close session
+.br
+close your session
+
+.P
+\fBSyntax:\fR shutdown $string
+.br
+\fBDescription:\fR shutdown mplayerd
+.br
+shut down mplayerd, $string must be 'now'
+
+.P
+\fBSyntax:\fR help $string
+.br
+\fBDescription:\fR display help
+.br
+type help $string for more information on command $string
+
+.P
+\fBSyntax:\fR load [ $instance ] $file
+.br
+\fBDescription:\fR load a file
+.br
+load $file into mplayer, use quotes for file names with spaces
+
+.P
+\fBSyntax:\fR pause [ $instance ]
+.br
+\fBDescription:\fR pause/unpause
+.br
+pause/unpause playback -- alias to play
+
+.P
+\fBSyntax:\fR fullscreen [ $instance ]
+.br
+\fBDescription:\fR toggle fullscreen
+.br
+toggle fullscreen for media playback
+
+.P
+\fBSyntax:\fR stop [ $instance ]
+.br
+\fBDescription:\fR stop (close) movie
+.br
+stop and close the playing movie
+
+.P
+\fBSyntax:\fR osd [ $instance ] $integer
+.br
+\fBDescription:\fR on screen display level
+.br
+change the OSD (On Screen Display) level $integer
+.br
+0 - no OSD
+.br
+1 - seek bar
+.br
+2 - seek bar + seconds
+.br
+3 - seek bar + seconds + time remaining
+
+.P
+\fBSyntax:\fR seek_percent $instance $integer
+.br
+\fBDescription:\fR seek by percent
+.br
+seek to percent $integer of the movie
+.br
+not all media will support seeking
+
+.P
+\fBSyntax:\fR seek_absolute $instance $integer
+.br
+\fBDescription:\fR seek by seconds
+.br
+seek to an absolute position $integer in seconds
+.br
+not all media will support seeking
+
+.P
+\fBSyntax:\fR seek_relative $instance $integer
+.br
+\fBDescription:\fR seek relatively by seconds
+.br
+seek from current position by $integer seconds
+.br
+not all media will support seeking
+
+.P
+\fBSyntax:\fR literal [ $instance ] $string
+.br
+\fBDescription:\fR send mplayer a command
+.br
+send mplayer a command directly
+.br
+enclose entire command $string in double quotes
+.br
+see man mplayer(1) for more information about SLAVE MODE PROTOCOL
+
+.P
+\fBSyntax:\fR volume $instance $integer
+.br
+\fBDescription:\fR adjust the volume down/up
+.br
+adjust the volume down/up
+.br
+$integer is 0 for down and 1 for up
+
+.P
+\fBSyntax:\fR mute [ $instance ]
+.br
+\fBDescription:\fR mute volume
+.br
+mute the volume
+
+.P
+\fBSyntax:\fR kill $integer
+.br
+\fBDescription:\fR kill session
+.br
+kill user session $integer
+
+.P
+\fBSyntax:\fR history
+.br
+\fBDescription:\fR display command history
+.br
+display previous command history
+
+.P
+\fBSyntax:\fR reset [ $instance ]
+.br
+\fBDescription:\fR reset mplayerd
+.br
+reset mplayer if something should go wrong
+
+.P
+\fBSyntax:\fR qload [ $instance ] $integer
+.br
+\fBDescription:\fR quick load
+.br
+load file $integer from current directory
+
+.P
+\fBSyntax:\fR clear
+.br
+\fBDescription:\fR clear terminal
+.br
+clear the terminal screen
+
+.P
+\fBSyntax:\fR instances
+.br
+\fBDescription:\fR display instances
+.br
+displays a list of available instances
+
+.P
+\fBSyntax:\fR new
+.br
+\fBDescription:\fR create new instance
+.br
+create a new instance, prints the new instance id
+
+.P
+\fBSyntax:\fR delete $instance
+.br
+\fBDescription:\fR delete instance
+.br
+deletes specified instance
+
+.P
+\fBSyntax:\fR who
+.br
+\fBDescription:\fR display who's online
+.br
+display who is currently connected to mplayerd
+.br
+displays ID, IP and CWD
+
+.P
+\fBSyntax:\fR arguments [ $instance ] $string
+.br
+\fBDescription:\fR change arguments for mplayer
+.br
+change/show arguments for instance, enclose arguments in double quotes
+
+
+.SH "EXAMPLES"
+.LP 
+To run this program the standard way type:
+.LP 
+$ mplayerd
+.LP 
+To keep it in the foreground with a good amount of debugging, use:
+.LP 
+$ mplayerd \-fg \-d \-d \-d 
+
+
+.SH "AUTHORS"
+.LP 
+Sig Lange <exonic@signuts.net>
+.SH "SEE ALSO"
+.LP 
+mplayer(1)

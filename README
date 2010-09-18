@@ -1,0 +1,53 @@
+Project: mplayerd
+License: GPL
+Author: Sig Lange
+Website: http://www.signuts.net/
+Contact: mplayerd@signuts.net
+
+Report Bugs to mplayerd-bugs@signuts.net
+
+Simple C daemon to control mplayer via slave mode protocol
+
+Connect to the daemon on port (default) 7400 and type help
+for more information
+
+
+Installation
+	- Download this tar.gz
+	- Unzip (which you probably already did!)
+	- make
+	- optional make install
+	- edit /etc/mplayerd.conf
+
+Usage:
+	mplayerd
+
+	telnet localhost 7400
+
+
+Report Bugs to mplayerd-bugs@signuts.net
+
+
+
+mplayerd
+daemon to control mplayer via TCP/IP
+
+-h --help             Print this help message
+-fg --foreground      Don't fork
+-p --port port        Specify port, default 7400
+-l --logfile file     Log to file default off
+-v --version          display version
+-d --debug	      specify debug level
+
+
+DEBUG LEVELS
+	0 (no debugging info)
+		- client connections and disconnects
+
+	1
+		- client send/recv buffers
+
+	2
+		- mplayer message thread debug
+		- various developer debugging
+

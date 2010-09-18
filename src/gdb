@@ -1,0 +1,5 @@
+#!/bin/bash
+
+killall -KILL mplayer mplayerd
+make build \
+&& gdb ./mplayerd $@

@@ -1,0 +1,80 @@
+mplayerd pthread layout
+
+Thread				Description
+------------------------------------------------
+server listen			listens on port and accepts new connections creating the [client X] thread
+movie playback			only while media is loaded, this thread exec's mplayer and waits for it to finish
+mplayer message			thread that reads the output of mplayer
+client X			this thread is for each client, up to MAX_CLIENTS, these are created when needed
+				by [server listen]
+
+*thread manager*		this thread is created automatically by the linux pthread library to teh first call
+				of pthread_create(), which is gong to be the [client X] thread. [thread manager] is
+				created right before the [client X] thread... Only create once however
+
+
+PUESDO-CODE
+
+
+server listen thread
+--------------------
+	while (accept(...)) { /* blocking socket */
+		pthread_create(...)
+	}
+
+
+movie playback thread
+---------------------
+
+	fork();
+
+	/* child */
+	exec(mplayer);
+
+	/* parent */
+	wait(NULL);
+
+	pthread_exit(0);
+
+mplayer message thread
+----------------------
+	for ( ;; ) {
+		if mplayer is playing {
+			mplayer_message(...)
+		}
+	}
+
+client X
+--------
+	for( ;; ) {
+		read(...);
+
+		[ process commands ]
+
+		write(...);
+	}
+
+	pthread_exit(0);
+
+
+---------------------- function calls ------------------
+
+
+[ server listen thread ]
+	accept
+		pthread_create(client_thread)
+
+
+[ client_thread ]
+loop {
+	r = clientRequest(..)
+		mp_process_command(..)
+			"load":
+				MPX_LOCK
+				mplayer_load(..)
+				MPX_UNLOCK
+
+}
+
+
+		--==	INCOMPLETE	==--

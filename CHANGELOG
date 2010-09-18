@@ -1,0 +1,131 @@
+- new id3 command to display id3 tag information on files (requires mp3info)
+- fixed a rediculous bug for testing purposes that disabled mplayer_message() processing!
+
+2005-02-23 mplayerd 0.1.20
+--------------------------
+- after many many revisions, this version should be loads more stable
+- fixed some #ifdef's so you can have instance support without tab completion
+- stopped setting pause state when mplayer prints '=== PAUSED ===' type output.
+- got rid of a few more malloc's
+- updated command history structure
+- fixed some logic problems in the way mplayer_unload() is being called 
+- forgot a mutex_lock calling get_instance in mplayer_message*
+
+2004-06-01 mplayerd 0.1.17
+--------------------------
+- added a better check which looks for :// in file names to determine if it's a URL. This fixes mplayerd unable to load
+  streams
+- better status return codes for various commands output. ( instance, arguments, delete, add, dvd commands)
+- fixed include/build error when DEBUG isn't defined
+- cleaned CMD_LS and added a directory suffix '/' (to allow frontends to determine file types)
+- added file stat() call to mplayer_load() to load only files
+
+2004-04-29 mplayerd 0.1.16
+--------------------------
+- non blocking sockets dropped
+- cleaned up / optimized tab completion code
+- new dvd command to load titles from dvd
+
+2003-12-01 mplayerd 0.1.14
+--------------------------
+- added two defines to enable/disable tab completion and instance support at compile time
+
+
+2003-11-10 mplayerd 0.1.12
+--------------------------
+- max_instances config directive added, limiting the max number of instances
+- setup defaults, so operation w/o config file is possible
+- various tab completion bugs
+- mplayerd man page
+- arguments command to change mplayer flags on the fly
+- tons of bugs fixes and code clean-ups
+
+2003-10-05 mplayerd 0.0.9
+-------------------------
+- multiple instance support
+- a locking contention issues fixed
+- various bug/typo fixes
+- fixed a .. directory traversal bug in tab completion and load command
+- all commands should properly deal with the instance command
+- under extreme load mplayer_command(..) timesout on write, increased timeout to 0.75
+  timeout read/write for mplayer now in config.h
+- fixed bugs while sending commands to a paused mplayer
+- most commands now have "smarter" tab completion
+
+2003-10-02 mplayerd 0.0.8
+-------------------------
+- load will now act as qload if the file isn't found
+- fixed some bugs in the linked-list ll_add(..) !! Man!?
+- tab completion code more organized
+
+
+2003-09-30 mplayerd 0.0.7
+-------------------------
+- added xstrdup() command that calls xmalloc() instead
+- added "qload" command
+- '?' help special key improved
+- added URL support -- Thanks to Michael Joosten <joost@xxxxxxxx>
+
+2003-09-29 mplayerd 0.0.6
+-------------------------
+- moved various #defines to inc/config.h
+- added -c --config flags to specify config file
+- added flags directive to config file for additional mplayer flags
+- added default_home directive to config file for default home for clients
+
+2003-09-26 mplayerd 0.0.5
+-------------------------
+- up arrow / down arrow history implemented
+- applied patch from Michael Joosten <joost@xxxxxxxx> which fixed the following:
+	* fixed a bug where mplayer exit'ed and went wild on a bad descriptor in the mplayer message thread
+	* status is updated to stop when mplayer exits normally now
+- took out mplayerd.conf from install target of Makefile, do "make install_config" instead
+
+2003-09-25 mplayerd 0.0.4
+-------------------------
+- incorporated help args into help, cleaner 'help [cmd]' output, ommitted short
+  description in 'help [cmd]' output too
+- fixed off by one error dealing with RECV_BUF
+
+2003-09-18 mplayerd 0.0.3
+-------------------------
+- various functions that dealt with the client_list struct now simply pass the index
+  of the client instead of socket, id, etc.
+- mplayer_message thread launched at startup
+- ADDED: config.h .. now contains config options
+- various cosmetics:
+	mplayer_help()	->	mplayerd_help()
+	eliminated ip_access.[ch], moved functions to client.c and parse_config.c
+	config.[ch] 	->	parse_config.[ch]
+	got rid of client_sock_id(..) -- not used
+- debug_msg(..) funciton implemented, DBG define not really used
+- cleaner logging, more organized debug levels
+- added xmemory.c, eventually will support mmap & malloc
+- more versatile help command
+- fixed a crucial bug in the fullscreen command attempting to obtain a lock twice. Ugh!
+
+2003-09-17 mplayerd 0.0.2
+-------------------------
+- converted to threading, too much going on to switch back and forth
+- added xmalloc(..) eventual options to use mmap or malloc
+- clientRequest renamed to client_request
+- clientSend renamed to client_send
+- loadDirectory renamed to load_dir, and added a max argument to load_dir(..)
+- better parsing in message thread, mpx now has audio_sec and video_sec
+- "status" command output updated to reflect the latter
+- SIGPIPE not ignored at times anymore & mplayer_dead() removed
+- various bug fixes and clean ups
+
+2003-??-?? mplayerd 0.0.1
+-------------------------
+ ( This is from memory )
+
+- compiled one central changelog
+- turned sockets all nonblocking
+- clientSend(..) function uses select(..)
+- clientRequets(..) checks return code of clientSend(..)
+- Various bug fixes, code clean up
+- #define OUTPUT_DONE "\xA0" added, for front ends
+- command history implemented
+- more organized command list structure
+- too many changes to remember!

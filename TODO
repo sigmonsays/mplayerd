@@ -1,0 +1,7 @@
+- dvd support
+- unique (short) cd for file names with the "load", "cd", etc commands
+- playlist support (management ? )
+- seperate [instX] support for multiple instances
+- xinerama support (multi head support)
+- more elaborate tab completion -- multiple tab complete functions
+
