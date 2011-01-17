@@ -1,0 +1,5 @@
+mplayerd (1.0.0-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- sig <sig@watermelon.grepped.org>  Sun, 16 Jan 2011 21:47:49 -0800

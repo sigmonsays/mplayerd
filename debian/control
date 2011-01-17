@@ -1,0 +1,14 @@
+Source: mplayerd
+Section: unknown
+Priority: extra
+Maintainer: sig <sig@watermelon.grepped.org>
+Build-Depends: cdbs, debhelper (>= 7)
+Standards-Version: 3.8.3
+Homepage: http://sourceforge.net/projects/mplayerd/
+
+Package: mplayerd
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: mplayerd
+ mplayerd is a deamon to control mplayer. It has an intuitive tab completed CLI. It's design goal is to create a daemon and various front 
+ ends which turn a remote linux box into a web based media player.
