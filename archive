@@ -1,0 +1,1 @@
+git archive --format tar --prefix mplayerd-1.0.0/ HEAD |gzip -9 > ../mplayerd-1.0.0.tar.gz
