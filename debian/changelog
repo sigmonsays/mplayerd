@@ -1,4 +1,10 @@
-mplayerd (1.0.0-1) unstable; urgency=low
+mplayerd (0.1.18) lucid; urgency=low
+
+  * initial debian and ubuntu packaging
+
+ -- sig <sig@watermelon.grepped.org>  Sun, 16 Jan 2011 22:10:26 -0800
+
+mplayerd (0.1.17) unstable; urgency=low
 
   * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
 
