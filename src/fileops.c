@@ -52,9 +52,9 @@ char *load_dir_entry(char *path, int entry) {
 			break;
 		}
 	}
-	closedir(d);
 
 	if (f) p = xstrdup(file->d_name);
+	closedir(d);
 	return p;
 }
 

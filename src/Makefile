@@ -4,7 +4,7 @@ BINARY=mplayerd
 CFLAGS_NORMAL=-Iinc -g -Wall
 CFLAGS_DEBUG=-Iinc -g -DDEBUG -Wall
 
-#CFLAGS=${CFLAGS_DEBUG}
+CFLAGS=${CFLAGS_DEBUG}
 #CFLAGS=${CFLAGS_NORMAL}
 
 MPLAYERD_OBJS=client_request.o ll.o mplayer_command.o mplayer_slave.o fileops.o client.o parse_config.o history.o xmemory.o debug.o tab_comp.o instance.o
